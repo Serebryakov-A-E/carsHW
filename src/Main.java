@@ -1,5 +1,5 @@
-import Transport.Bus;
-import Transport.Car;
+import transport.Bus;
+import transport.Car;
 
 public class Main {
     public static void main(String[] args) {

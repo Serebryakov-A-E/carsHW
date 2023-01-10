@@ -2,7 +2,7 @@ package Transport;
 
 import java.time.LocalDate;
 
-public class Car {
+public class Car extends Transport {
     public class Key {
         private final boolean remoteEngineStart;
         private final boolean keylessEntry;
@@ -20,15 +20,13 @@ public class Car {
             return keylessEntry;
         }
     }
-
     private Key key;
-    private final String brand;
-    private final String model;
+    //private final String brand;
+    //private final String model;
     private double engineVolume;
-    private String color;
-    private final int year;
-    private final String country;
-
+    //private String color;
+    //private final int year;
+    //private final String country;
     private String transmissionType;
     private final String bodyType;
     private String registerNumber;
@@ -36,41 +34,13 @@ public class Car {
 
     private boolean winterTiers;
 
-    public Car(String brand, String model, double engineVolume, String color, int year, String country, String bodyType, int seats) {
-        if (brand != null) {
-            this.brand = brand;
-        } else {
-            this.brand = "default";
-        }
-
-        if (model != null) {
-            this.model = model;
-        } else {
-            this.model = "default";
-        }
-
-        if (country != null) {
-            this.country = country;
-        } else {
-            this.country = "default";
-        }
+    public Car(String brand, String model, double engineVolume, String color, int year, String country, String bodyType, int seats, int maxSpeed) {
+        super(brand, model, year, country, color, maxSpeed);
 
         if (engineVolume > 0) {
             this.engineVolume = engineVolume;
         } else {
             this.engineVolume = 1.5;
-        }
-
-        if (color != null) {
-            this.color = color;
-        } else {
-            this.color = "white";
-        }
-
-        if (year > 0) {
-            this.year = year;
-        } else {
-            this.year = 2000;
         }
 
         if (bodyType != null) {
@@ -88,7 +58,8 @@ public class Car {
 
     @Override
     public String toString() {
-        return String.format("%s %s, %d год выпуска, сборка в %s, %s цвета, объем двигателя — %.1f л.", brand, model, year, country, color, engineVolume);
+        return String.format("%s %s, %d год выпуска, сборка в %s, %s цвета, объем двигателя — %.1f л. Максимальная скорость - %dкм/час.",
+                brand, model, year, country, color, engineVolume, maxSpeed);
     }
 
     public String getParameters() {
@@ -96,28 +67,8 @@ public class Car {
                 , brand, model, year, country, color, engineVolume, bodyType, transmissionType, registerNumber, seats, winterTiers);
     }
 
-    public String getBrand() {
-        return brand;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
     public double getEngineVolume() {
         return engineVolume;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getCountry() {
-        return country;
     }
 
     public String getTransmissionType() {
@@ -137,7 +88,9 @@ public class Car {
     }
 
     public String getKeyInformation() {
-        return String.format("Удаленный запуск %b, Бесключевой доступ %b\n", key.keylessEntry, key.remoteEngineStart);
+        return String.format("Удаленный запуск - %s, Бесключевой доступ - %s\n",
+                key.keylessEntry ? "есть" : "нет",
+                key.remoteEngineStart ? "есть" : "нет");
     }
 
     public boolean isWinterTiers() {
@@ -150,10 +103,6 @@ public class Car {
         } else {
             this.engineVolume = 1.5;
         }
-    }
-
-    public void setColor(String color) {
-        this.color = color;
     }
 
     public void setTransmissionType(String transmissionType) {
